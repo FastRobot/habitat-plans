@@ -1,0 +1,5 @@
+# some habitat ingores
+**/results
+
+# RubyMine
+.idea
