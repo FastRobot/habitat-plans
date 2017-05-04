@@ -3,15 +3,15 @@ Working:
 * grafana
 * exports correctly to docker, runs as expected
 * pretty much just default install
+* listen port is configurable and exported
 
 Needed:
 
-* admin password via config
-* listen port should be configurable and exported
+* admin password via hab config
 * nginx proxy
 * prometheus datastore discovery and config
 
 Questions:
 
 * leave the default grafana.ini in config/?
-* Pass/change some paths in the run hook or back into the config file?  Should be consistent.
+* Pass/change config in the run hook or back into the config file?  Should be consistent.
