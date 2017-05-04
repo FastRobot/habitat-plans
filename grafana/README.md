@@ -1,12 +1,6 @@
-habitat.sh plans by Fast Robot, LLC
-=====
+Grafana in habitat.sh
+====
 
-What?
-----
-
-All our habitat.sh plans, jumbled into one repo!
-
-I'm sure we'll sort them out, or move some to core
 
 Example Usage
 ----
