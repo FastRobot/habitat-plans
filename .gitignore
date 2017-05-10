@@ -3,3 +3,7 @@
 
 # RubyMine
 .idea
+
+# Chef
+.kitchen
+
