@@ -9,9 +9,7 @@ Needed:
 
 * admin password via hab config
 * nginx proxy
+* template whole default config file
+* undo run hook config passing (in favor of above templated config file)
+* compile from source rather than rely on pre-built binaries
 * prometheus datastore discovery and config
-
-Questions:
-
-* leave the default grafana.ini in config/?
-* Pass/change config in the run hook or back into the config file?  Should be consistent.
