@@ -11,10 +11,8 @@ pkg_source="https://github.com/prometheus/prometheus/archive/v${pkg_version}.tar
 pkg_shasum=ecc9ce94fce45994c23b76eb0c5acbb1b942513be601872c8cd74d0821450c5e
 prom_pkg_dir="$HAB_CACHE_SRC_PATH/${pkg_name}-${pkg_version}"
 prom_build_dir="${prom_pkg_dir}/src/${pkg_source}"
-pkg_deps=(
-  core/go
-)
 pkg_build_deps=(
+  core/go
   core/git
   core/gcc
   core/make

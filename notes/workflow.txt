@@ -22,5 +22,4 @@ edit local prometheus.yml
 hab start fastrobot/prometheus --config-from /src
 head /hab/svc/prometheus/config/prometheus.yml (to see changes)
 
-(note, this does not help with hooks. Do as little as possible in hooks cause they're a pain
-to debug)
+(confirmed also works with hooks)
