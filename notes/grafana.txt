@@ -1,0 +1,43 @@
+general build notes
+
+precompiled binary, running it (and ldd) gave "no such file or directory", probably needed
+patchelf. (ldd in a regular docker container revealed it depended on /lib64/ld-linux-x86_64.so
+which is the canonical patchelf example)
+
+patchelf --interpreter "$(pkg_path_for glibc)/lib/ld-linux-x86-64.so.2" \
+         ${pkg_prefix}/bin/somebinary
+
+hab studio rm
+hab studio enter
+build grafana
+hab pkg export docker fastrobot/grafana
+hab sup start
+
+(sup start might hold on to a previous hart you attempted to load locally that it held on to
+(like a typo), which confused me as
+
+hab pkg docker export fastrobot/grafana
+Successfully built 56080b379c56
+Successfully tagged fastrobot/grafana:4.2.0-20170504045601
+
+general docker ring notes
+
+docker run -ti -P fastrobot/grafana --topology leader --group test
+docker run -ti -P fastrobot/grafana --topology leader --group test --peer 172.17.0.3
+docker run -ti -P fastrobot/grafana --topology leader --group test --peer 172.17.0.4
+
+docker ps
+wafer:~ lamont$ docker ps
+CONTAINER ID        IMAGE                                              COMMAND                  CREATED             STATUS              PORTS                                              NAMES
+0d2163a0788b        fastrobot/grafana                                  "/init.sh --topolo..."   25 seconds ago      Up 23 seconds       0.0.0.0:32789->3000/tcp, 0.0.0.0:32788->9631/tcp   keen_meitner
+1b5030b57068        fastrobot/grafana                                  "/init.sh --topolo..."   29 seconds ago      Up 28 seconds       0.0.0.0:32787->3000/tcp, 0.0.0.0:32786->9631/tcp   sharp_franklin
+db8b85692230        fastrobot/grafana                                  "/init.sh --topolo..."   34 seconds ago      Up 32 seconds       0.0.0.0:32785->3000/tcp, 0.0.0.0:32784->9631/tcp   angry_agnesi
+0929ef3e320d        habitat-docker-registry.bintray.io/studio:0.22.0   "/bin/hab studio -..."   4 hours ago         Up 4 hours                                                             vigilant_nobel
+
+since 32788->9631/tcp on keen_meitner
+curl http://localhost:32788/services |jq .
+
+and if you browse the root, all the API documentation is there
+
+
+
