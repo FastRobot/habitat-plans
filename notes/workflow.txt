@@ -1,0 +1,26 @@
+in habitat/
+hab studio -k fastrobot enter
+build prometheus
+hab pkg export docker fastrobot/prometheus
+
+(in other window)
+$ docker run -ti -P fastrobot/prometheus --topology standalone --group test
+(--topology enables the gossip port which I use)
+
+
+to rapidly iterate on config:
+https://www.habitat.sh/docs/reference/plan-syntax/#iterative-development
+hab start core/redis --config-from /src
+
+which is really
+hab studio enter
+build
+hab start fastrobot/prometheus --config-from /src
+hab sup stop fastrobot/prometheus
+hab sup status
+edit local prometheus.yml
+hab start fastrobot/prometheus --config-from /src
+head /hab/svc/prometheus/config/prometheus.yml (to see changes)
+
+(note, this does not help with hooks. Do as little as possible in hooks cause they're a pain
+to debug)
