@@ -13,3 +13,7 @@ Needed:
 * undo run hook config passing (in favor of above templated config file)
 * compile from source rather than rely on pre-built binaries
 * prometheus datastore discovery and config
+
+Committed:
+* need more docs
+* compile from source rather than binaries
