@@ -19,9 +19,13 @@ pkg_build_deps=(
 )
 
 pkg_exports=(
-  [port-http]=listening_port
+  [prom_ds_http]=listening_port
 )
-pkg_exposes=(port-http)
+pkg_exposes=(prom_ds_http)
+
+pkg_binds_optional=(
+  [targets]="metric-http-port"
+)
 
 
 do_prepare() {

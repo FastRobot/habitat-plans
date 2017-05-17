@@ -26,7 +26,14 @@ Leader - self-federating. only the leader
 multi node example
 ---
 ```shell
-docker run -ti --rm -P --name prom0 fastrobot/grafana --topology leader --group test
+docker run -ti --rm -P --name prom0 fastrobot/prometheus --topology leader --group test
 docker run -ti --rm -P --name prom1 --link prom0:peer_node fastrobot/grafana --topology leader --group test --peer peer_node
 docker run -ti --rm -P --name prom1 --link prom0:peer_node fastrobot/grafana --topology leader --group test --peer peer_node
+```
+
+Discover targets using the hab ring
+---
+```
+docker run -ti --rm -P --name prom0 fastrobot/prometheus --topology standalone --peer 172.17.0.3 --group demo --bind targets:node_exporter.demo
+
 ```
