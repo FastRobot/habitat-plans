@@ -13,7 +13,11 @@ Needed:
 * undo run hook config passing (in favor of above templated config file)
 * compile from source rather than rely on pre-built binaries
 * prometheus datastore discovery and config
+* auto-load node dashboard?
 
 Committed:
 * need more docs
 * compile from source rather than binaries
+
+
+hab sup start fastrobot/grafana --config-from /src --peer 172.17.0.3 --group demo

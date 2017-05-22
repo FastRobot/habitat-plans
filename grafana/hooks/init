@@ -1,0 +1,5 @@
+#!/bin/sh
+
+mkdir -p {{pkg.svc_var_path}}/dashboards
+#wget -q https://grafana.com/api/dashboards/2/revisions/2/download -O {{pkg.svc_var_path}}/dashboards/prometheus-stats_rev2.json
+#wget -q https://grafana.com/api/dashboards/1860/revisions/3/download -O {{pkg.svc_var_path}}/dashboards/node-exporter-full_rev3.json
