@@ -1,0 +1,4 @@
+galera mysql clusters would be a pretty trivial yet awesome implementation of the 3 way clustering plus source builds
+
+https://mariadb.com/kb/en/mariadb/installating-galera-from-source/
+

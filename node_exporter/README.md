@@ -6,8 +6,8 @@ Downloads a tarball for a released branch of node_exporter, compiles and runs it
 Config
 ---
  
-Joining this process to a group with a prometheus running should cause the
-prometheus to start automatically scraping this.
+Minimal, as node_exporter joins a hab ring, the core/prometheus service will
+automatically add each as a target for metric scraping.
 
 Running
 ---
@@ -28,13 +28,13 @@ docker run -d -p 9100:9100 \
   -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($|/)"
 ```
 
-Here's an example of using the optional bindings from fastrobot/prometheus to 
+Here's an example of using the optional bindings from core/prometheus to 
 dynamically populate prometheus's metric target list with any node_exporter
 that appears in the ring
 
 ```
-$ docker run -ti -P --rm --name node_exporter fastrobot/node_exporter --topology standalone --group demo
-$ docker run -ti --rm -P --name prom0 fastrobot/prometheus --topology standalone --peer 172.17.0.3 --group demo --bind targets:node_exporter.demo
+$ docker run -ti -P --rm --name node_exporter core/node_exporter --topology standalone --group demo
+$ docker run -ti --rm -P --name prom0 core/prometheus --topology standalone --peer 172.17.0.3 --group demo --bind targets:node_exporter.demo
 ```
 
 Room for Improvement

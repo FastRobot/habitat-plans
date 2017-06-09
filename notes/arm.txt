@@ -1,0 +1,93 @@
+
+cross compiling attempts:
+$ docker pull ragnaroek/rust-raspberry:1.17.0
+
+https://github.com/Ragnaroek/rust-on-raspberry-docker
+(this docker image touted only understood cargo, not make, and had no easy shell entrypoint)
+
+git clone git@github.com:habitat-sh/habitat.git; cd habitat
+
+docker run -it --rm \
+  -v $(pwd):/source \
+  dlecan/rust-crosscompiler-arm:stable
+
+cross compiling is pointless as we need the hab binary early in the process plus for testing
+
+Now working on a pi with a recent rasbian:
+
+(I did this manually but the install script would have done the same for me)
+root@mrblack:~# sudo usermod -aG docker build
+root@mrblack:~# curl -sSL get.docker.com | sh
+
+modprobe: FATAL: Module aufs not found in directory /lib/modules/4.1.19-v7+
+Warning: current kernel is not supported by the linux-image-extra-virtual
+ package.  We have no AUFS support.  Consider installing the packages
+ linux-image-virtual kernel and linux-image-extra-virtual for AUFS support.
+
+ systemctl enable docker
+
+ http://blog.alexellis.io/getting-started-with-docker-on-raspberry-pi/
+ (just a nice point of reference)
+
+There's no consistent tagging of docker images not for x86_64, but these folks have 20 or so arm baed builds:
+ https://hub.docker.com/r/armhf
+ docker run -ti armhf/hello-world
+
+cp support/hab/install.sh /tmp
+sh support/linux/install_dev_0_ubuntu_latest.sh
+
+
+Compiling habitat_common v0.0.0 (file:///home/build/habitat/components/common)
+error[E0308]: mismatched types
+   --> src/manager/sys.rs:111:49
+    |
+111 |             let slice = unsafe { CStr::from_ptr(ptr as *const i8) };
+    |                                                 ^^^^^^^^^^^^^^^^ expected u8, found i8
+    |
+    = note: expected type `*const u8`
+               found type `*const i8`
+    = help: here are some functions which might fulfill your needs:
+            - .offset(...)
+            - .wrapping_offset(...)
+error: aborting due to previous error
+error: Could not compile `habitat_sup`.
+
+https://doc.rust-lang.org/libc/x86_64-unknown-linux-gnu/libc/type.c_char.html
+and
+https://doc.rust-lang.org/libc/arm-unknown-linux-gnueabihf/libc/type.c_char.html
+suggested from
+https://users.rust-lang.org/t/solved-issues-using-serial-library-in-arm/4357
+
+
+all unit tests pass, but integration fails:
+
+    Running /root/habitat/target/debug/deps/integration-f5b135916a8e536b
+
+running 4 tests
+Failed to stop postgresql.service: Unit postgresql.service not loaded.
+useradd: user 'hab' already exists
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  8464  100  8464    0     0   3671      0  0:00:02  0:00:02 --:--:--  3672
+--> hab-install: Installing Habitat 'hab' program
+--> hab-install: Downlading via wget: https://api.bintray.com/content/habitat/stable/linux/armv7l/hab-%24latest-armv7l-linux.tar.gz?bt_package=hab-armv7l-linux
+xxx hab-install: wget failed to download file, perhaps wget doesn't have SSL support and/or no CA certificates are present?
+--> hab-install: Downlading via curl: https://api.bintray.com/content/habitat/stable/linux/armv7l/hab-%24latest-armv7l-linux.tar.gz?bt_package=hab-armv7l-linux
+curl: (22) The requested URL returned error: 404 Not Found
+
+This is probably what I want:
+
+https://www.habitat.sh/docs/internals-bootstrapping/
+
+need:
+root@fr-test:~/habitat# docker run -ti armhf/busybox
+
+
+installed chef13 on arm:
+https://leastresistance.wordpress.com/2017/05/12/chef-13-on-the-beaglebone-black/
+
+https://github.com/bdangit/chef-depot
+
+on an ec2 x86_64 instance:
+git clone https://github.com/bdangit/chef-depot.git
+yum install https://releases.hashicorp.com/vagrant/1.9.5/vagrant_1.9.5_x86_64.rpm
