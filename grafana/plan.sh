@@ -3,6 +3,7 @@ pkg_origin=fastrobot
 pkg_version="4.2.0"
 pkg_maintainer="The Habitat Maintainers <humans@habitat.sh>"
 pkg_license=('Apache-2.0')
+pkg_upstream_url=https://grafana.com/
 pkg_source="https://s3-us-west-2.amazonaws.com/${pkg_name}-releases/release/${pkg_name}-${pkg_version}.linux-x64.tar.gz"
 pkg_filename="${pkg_name}-${pkg_version}.linux-x64.tar.gz"
 pkg_shasum="e9927baaaf6cbcab64892dedd11ccf509e4edea54670db4250b9e7568466ec61"
@@ -34,17 +35,14 @@ do_build() {
 }
 
 do_install() {
-  mkdir -p {{pkg.svc_var_path}}/plugins
-  #mkdir -p {{pkg.svc_var_path}}/dashboards
-  cd $HAB_CACHE_SRC_PATH/${pkg_name}-${pkg_version}
-  cp -r conf  public  scripts  vendor ${pkg_prefix}/
-  cp -r bin/* ${pkg_prefix}/bin/
+  mkdir -p "${pkg_svc_var_path}/plugins"
+  cd "$HAB_CACHE_SRC_PATH/${pkg_name}-${pkg_version}" || exit 1
+  cp -r conf  public  scripts  vendor "${pkg_prefix}/"
+  cp -r bin/* "${pkg_prefix}/bin/"
   patchelf --interpreter "$(pkg_path_for glibc)/lib/ld-linux-x86-64.so.2" \
-         ${pkg_prefix}/bin/grafana-server
+         "${pkg_prefix}/bin/grafana-server"
   patchelf --interpreter "$(pkg_path_for glibc)/lib/ld-linux-x86-64.so.2" \
-         ${pkg_prefix}/bin/grafana-cli
+         "${pkg_prefix}/bin/grafana-cli"
   #install_cacerts
   return 0
 }
-
-

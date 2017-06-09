@@ -1,0 +1,5 @@
+tasha
+[10:55 AM]
+Also if you’d like to do a blog post about the arm + prometheus + raspberry pi work, we’re starting our habitat blog and that would be awesome content
+
+so arm cross compiling + prometheus 

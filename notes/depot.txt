@@ -1,0 +1,10 @@
+
+sudo hab sup run
+sudo /usr/local/bin/hab sup load core/redis --group database
+sudo /usr/local/bin/hab sup load core/hab-builder-router --group router
+sudo /usr/local/bin/hab sup load core/hab-builder-sessionsrv --bind database:redis.private --bind router:hab-builder-router.private
+sudo /usr/local/bin/hab sup load core/hab-builder-vault --bind database:redis.private --bind router:hab-builder-router.private
+sudo /usr/local/bin/hab sup load core/hab-builder-api --bind database:redis.private --bind router:hab-builder-router.private
+sudo /usr/local/bin/hab sup load core/builder-api-proxy --bind router:hab-builder-router.private
+
+so I can't run the builder-router cause it's missing a config file. hart date is 20161219214221

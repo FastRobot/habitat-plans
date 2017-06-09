@@ -63,11 +63,13 @@ REALDIR=`pwd`
 ######################################################################
 
 # Check for MULE_HOME
-if [ -z "$MULE_HOME" ] ; then
-    # REALDIR points to $MULE_HOME/bin now, strip off the bin part so
-    # we get a proper MULE_HOME instead of a relative path
-    MULE_HOME="`dirname "${REALDIR}"`"
-fi
+#if [ -z "$MULE_HOME" ] ; then
+#    # REALDIR points to $MULE_HOME/bin now, strip off the bin part so
+#    # we get a proper MULE_HOME instead of a relative path
+#    MULE_HOME="`dirname "${REALDIR}"`"
+#fi
+
+MULE_HOME={{pkg.svc_path}}
 
 # strip a potential trailing slash in MULE_HOME. This is required to build a
 # valid path for WRAPPER_CMD below which is used when running the stop

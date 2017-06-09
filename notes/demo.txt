@@ -1,0 +1,7 @@
+docker run -ti --rm -P --name prom0 fastrobot/prometheus --bind targets:node_exporter.demo --group demo
+docker run -ti --rm -P --link prom0:peer_node --name node_exporter fastrobot/node_exporter  --group demo --peer peer_node
+docker run -ti --rm -P --link prom0:peer_node --name grafana fastrobot/grafana --group demo --peer peer_node --bind prom:prometheus.demo
+
+docker run -ti -P --rm --name node_exporter2 fastrobot/node_exporter --group demo --peer 172.17.0.3
+
+
